@@ -1,0 +1,68 @@
+{% extends './index.html' %}
+ {% block title %}Search {{ product }} {% endblock %}
+ {%block style%}
+        .col-md-6 {
+            border-radius: .5rem;
+            {% comment %} border: 0.5px solid black; {% endcomment %}
+            transition: box-shadow .3s;
+            align-content: center;
+        }
+        .col-md-6:hover {
+            background-color: white;
+            color: green;
+            box-shadow: 0 0 11px black;
+
+        }
+       
+        .col-md-5 {
+            border-radius: .5rem;
+            align-content: center;
+            overflow:auto;
+            transition: transform .3s;
+        }
+        .col-md-5:hover{
+             transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+             float:right;
+        }
+
+        .d-block {
+            border-radius: .5rem;
+            {% comment %} border: 1px solid red; {% endcomment %}
+            {% comment %} transition: box-shadow .3s; {% endcomment %}
+            width:auto; min-height:14rem; overflow:auto;
+        }
+        .d-block:hover {
+            {% comment %} box-shadow: 0 0 11px black; {% endcomment %}
+        }
+        body{
+            background-color:black;
+        }
+  {% endblock %}
+ {% block body %}
+ <div class="d-flex justify-content-center bg-white" style="color:red;">
+    <h3 style="text-align:center;">Showing Top Results For {{product}} </h3>
+</div>
+    <ul style="background-color: black; margin:0px;">
+        {% for product in searchResult %}
+
+        <div class="row featurette text-center mx-auto m-3" style="background-color:lightyellow; border-radius:.5rem; width:70%">
+            <div class="col-md-6 m-3 p-5 text-center ">
+                <h5 class="featurette-heading">{{ product.pName }}. <p class="fw-normal" style="color:blue; font-size:1rem">Ratings : {{product.pRatings}}</p></h5>
+                <p class="lead fw-bold" style="color:red">{{product.pPrice}}</p>
+                <a class="fs-6" href="/reviewanalysis/?id={{ product.pId }}" style="color:#081046;">Click Here To Do Review Analysis</a>
+            </div>
+            <div class="col-md-5 p-5 text-end">
+                <img src="{{product.pImage}}" class="d-block" alt="{{ product.pName }}">
+               
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </ul>
+    <!-- <button class="container mx-auto" href="/search/?query={{ product }}" action="{% url 'search_result' %}" method="get" style="color:maroon">Next page for {{ product }}</a>  -->
+    <!-- <button id="nextPage" class="btn btn-warning btn-outline-success" type="submit">Next page for {{ product }}</button> -->
+    <div class="d-flex justify-content-end bg-success">
+        <!-- <button type="button" class="btn btn-info btn-outline-white m-2"> Next page for {{ product }}</button> -->
+        <a href="/search/?query={{ product }}" style="color:white; margin:1rem">Next page for {{ product }}</a>
+    </div>
+    {% endblock %}
